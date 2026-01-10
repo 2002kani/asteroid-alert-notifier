@@ -2,6 +2,7 @@ package com.asteroidAlert.asteroidservice.service.impl;
 
 import com.asteroidAlert.asteroidservice.client.NasaClient;
 import com.asteroidAlert.asteroidservice.dto.Asteroid;
+import com.asteroidAlert.asteroidservice.event.AsteroidCollisionEvent;
 import com.asteroidAlert.asteroidservice.service.AsteroidService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,25 @@ public class AsteroidServiceImpl implements AsteroidService {
         List<Asteroid> asteroidList = nasaClient.getNeoAsteroids(startDate, endDate);
 
         // Send alert (if any hazardous asteroids)
-        final List<Asteroid> dangerousAsteroid = asteroidList.stream()
+        final List<Asteroid> dangerousAsteroids = asteroidList.stream()
                 .filter(Asteroid::isPotentiallyHazardousAsteroid).toList();
-
+        List<AsteroidCollisionEvent> asteroidEvent = createAsteroidEvent(dangerousAsteroids);
         // Create alert and put on kafka topic
     }
+
+    @Override
+    public List<AsteroidCollisionEvent> createAsteroidEvent(final List<Asteroid> dangerousAsteroids) {
+        return dangerousAsteroids.stream()
+                .map(asteroid ->
+                        AsteroidCollisionEvent.builder()
+                                .asteroidName(asteroid.getName())
+                                .closeApproachDate(asteroid.getCloseApproachData().getFirst().getApproachDate().toString())
+                                .missDistanceKilometers(asteroid.getCloseApproachData().getFirst().getMissedDistance().getKilometers())
+                                .estimatedDiameterAvgMeters((asteroid.getEstimatedDiameter().getMeters().getMinDiameter() +
+                                        asteroid.getEstimatedDiameter().getMeters().getMaxDiameter()) / 2)
+                                .build())
+                .toList();
+    }
+
+
 }

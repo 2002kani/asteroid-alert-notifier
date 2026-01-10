@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,5 +22,5 @@ public class Asteroid {
     private boolean isPotentiallyHazardousAsteroid;
 
     @JsonProperty("close_approach_data")
-    private CloseApproachData closeApproachData;
+    private List<CloseApproachData> closeApproachData;
 }
