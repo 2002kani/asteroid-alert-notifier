@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DiameterRange {
     @JsonProperty("estimated_diameter_min")
-    private Long minDiameter;
+    private double minDiameter;
 
     @JsonProperty("estimated_diameter_max")
-    private Long maxDiameter;
+    private double maxDiameter;
 }

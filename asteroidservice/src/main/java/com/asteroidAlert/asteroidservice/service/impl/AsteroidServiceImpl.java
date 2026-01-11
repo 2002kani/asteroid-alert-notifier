@@ -6,6 +6,7 @@ import com.asteroidAlert.asteroidservice.event.AsteroidCollisionEvent;
 import com.asteroidAlert.asteroidservice.service.AsteroidService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AsteroidServiceImpl implements AsteroidService {
     private final NasaClient nasaClient;
+    private KafkaTemplate<String, AsteroidCollisionEvent> kafkaTemplate;
 
     @Override
     public void alert() {
@@ -32,8 +34,15 @@ public class AsteroidServiceImpl implements AsteroidService {
         // Send alert (if any hazardous asteroids)
         final List<Asteroid> dangerousAsteroids = asteroidList.stream()
                 .filter(Asteroid::isPotentiallyHazardousAsteroid).toList();
-        List<AsteroidCollisionEvent> asteroidEvent = createAsteroidEvent(dangerousAsteroids);
+
         // Create alert and put on kafka topic
+        List<AsteroidCollisionEvent> asteroidEvent = createAsteroidEvent(dangerousAsteroids);
+        log.info("Sending {} asteroid alerts to Kafka", asteroidEvent.size());
+
+        asteroidEvent.forEach(event -> {
+            kafkaTemplate.send("asteroid-alert", event);
+            log.info("Asteroid alert sent to Kafka topic: {}", event);
+        });
     }
 
     @Override

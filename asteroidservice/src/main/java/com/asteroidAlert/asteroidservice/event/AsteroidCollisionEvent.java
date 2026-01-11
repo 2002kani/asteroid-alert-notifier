@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class AsteroidCollisionEvent {
     private String asteroidName;
     private String closeApproachDate;
-    private Long missDistanceKilometers;
-    private Long estimatedDiameterAvgMeters;
+    private String missDistanceKilometers;
+    private double estimatedDiameterAvgMeters;
 }

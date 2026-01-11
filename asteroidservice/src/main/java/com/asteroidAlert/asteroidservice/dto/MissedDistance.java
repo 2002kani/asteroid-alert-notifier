@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MissedDistance {
 
-    private Long kilometers;
+    private String kilometers;
 }
