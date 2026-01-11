@@ -1,4 +1,8 @@
 package com.asteroidsystem.notificationservice.repository;
 
-public interface NotificationRepository {
+
+import com.asteroidsystem.notificationservice.entity.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
 }
