@@ -4,12 +4,14 @@ package com.asteroidsystem.notificationservice.service.impl;
 import com.asteroidsystem.notificationservice.asteroidalerting.event.AsteroidCollisionEvent;
 import com.asteroidsystem.notificationservice.entity.Notification;
 import com.asteroidsystem.notificationservice.repository.NotificationRepository;
+import com.asteroidsystem.notificationservice.service.EmailService;
 import com.asteroidsystem.notificationservice.service.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,10 +22,12 @@ import java.time.LocalDate;
 public class NotificationServiceImpl implements NotificationService {
 
     final private NotificationRepository notificationRepository;
+    final private EmailService emailService;
 
     @Autowired
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository,  EmailService emailService) {
         this.notificationRepository = notificationRepository;
+        this.emailService = emailService;
     }
 
     @KafkaListener(topics = "asteroid-alert", groupId = "notification-service")
@@ -47,5 +51,12 @@ public class NotificationServiceImpl implements NotificationService {
                 .estimatedDiameterAvgMeters(event.getEstimatedDiameterAvgMeters())
                 .emailSent(false)
                 .build();
+    }
+
+    @Scheduled(fixedRate = 10000)
+    @Override
+    public void sendAlertingEmail() {
+        log.info("Sending alerting email");
+        emailService.sendAsteroidAlertEmail();
     }
 }

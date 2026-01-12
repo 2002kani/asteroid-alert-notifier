@@ -6,4 +6,5 @@ import com.asteroidsystem.notificationservice.entity.Notification;
 public interface NotificationService {
     void alertEvent(AsteroidCollisionEvent event);
     Notification createNotification(AsteroidCollisionEvent event);
+    void sendAlertingEmail();
 }
