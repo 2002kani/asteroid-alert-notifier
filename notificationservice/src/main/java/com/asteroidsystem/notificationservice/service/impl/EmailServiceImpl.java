@@ -3,9 +3,13 @@ package com.asteroidsystem.notificationservice.service.impl;
 import com.asteroidsystem.notificationservice.entity.Notification;
 import com.asteroidsystem.notificationservice.entity.User;
 import com.asteroidsystem.notificationservice.repository.NotificationRepository;
+import com.asteroidsystem.notificationservice.repository.UserRepository;
 import com.asteroidsystem.notificationservice.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,11 +20,18 @@ import java.util.List;
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    @Value("${email.service.from.email}")
+    private String fromEmail;
+
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
+    private final JavaMailSender javaMailSender;
 
     @Autowired
-    public EmailServiceImpl(NotificationRepository notificationRepository) {
+    public EmailServiceImpl(NotificationRepository notificationRepository, UserRepository userRepository,  JavaMailSender javaMailSender) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
+        this.javaMailSender = javaMailSender;
     }
 
     @Override
@@ -30,6 +41,26 @@ public class EmailServiceImpl implements EmailService {
         if(text == null) {
             log.info("No asteroids to send alerts for at {}", LocalDateTime.now());
         }
+
+        final List<String> toEmails =  userRepository.findAllEmailsAndNotificationsEnabled();
+        if(toEmails.isEmpty()) {
+            log.info("No user to send an E-mail to.");
+            return;
+        }
+
+        toEmails.forEach(toEmail -> sendEmail(toEmail, text));
+        log.info("Email sent to : #{} users.",  toEmails.size());
+    }
+
+    private void sendEmail(String toEmail, String text){
+        SimpleMailMessage email = new SimpleMailMessage();
+
+        email.setTo(toEmail);
+        email.setFrom(fromEmail);
+        email.setSubject("Nasa Asteroid Collision Event!");
+        email.setText(text);
+
+        javaMailSender.send(email);
     }
 
     private String createEmailText() {
