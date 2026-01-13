@@ -5,3 +5,12 @@ A small application that monitors potentially hazardous asteroids using NASA's N
 ## Microservice Architecture Overview
 
 ![Backend Architecture](./assets/backend-architecture.png)
+
+
+## Tech Stack
+- Java (Spring Boot)
+- Apache Kafka
+- PostgreSQL
+- Docker
+- Mailtrap
+- NASA NeoWs API
