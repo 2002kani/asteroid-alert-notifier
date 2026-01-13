@@ -1,13 +1,10 @@
-package com.asteroidsystem.notificationservice.service.impl;
+package com.asteroidAlert.asteroidservice.service.impl;
 
-
-import com.asteroidsystem.notificationservice.asteroidalerting.event.AsteroidCollisionEvent;
-import com.asteroidsystem.notificationservice.entity.Notification;
-import com.asteroidsystem.notificationservice.repository.NotificationRepository;
-import com.asteroidsystem.notificationservice.service.EmailService;
-import com.asteroidsystem.notificationservice.service.NotificationService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.asteroidAlert.asteroidservice.entity.Notification;
+import com.asteroidAlert.asteroidservice.event.AsteroidCollisionEvent;
+import com.asteroidAlert.asteroidservice.repository.NotificationRepository;
+import com.asteroidAlert.asteroidservice.service.EmailService;
+import com.asteroidAlert.asteroidservice.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -38,8 +35,6 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notification = createNotification(event);
         final Notification savedNotification = notificationRepository.saveAndFlush(notification);
         log.info("Saved notification: {}", savedNotification);
-
-
     }
 
     @Override
@@ -53,7 +48,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .build();
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     @Override
     public void sendAlertingEmail() {
         log.info("Sending alerting email");

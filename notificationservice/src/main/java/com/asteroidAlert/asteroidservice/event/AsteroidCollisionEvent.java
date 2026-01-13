@@ -1,4 +1,4 @@
-package com.asteroidsystem.notificationservice.asteroidalerting.event;
+package com.asteroidAlert.asteroidservice.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

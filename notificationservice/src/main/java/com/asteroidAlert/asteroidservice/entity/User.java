@@ -1,4 +1,4 @@
-package com.asteroidsystem.notificationservice.entity;
+package com.asteroidAlert.asteroidservice.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

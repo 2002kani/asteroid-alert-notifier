@@ -1,6 +1,6 @@
-package com.asteroidsystem.notificationservice.repository;
+package com.asteroidAlert.asteroidservice.repository;
 
-import com.asteroidsystem.notificationservice.entity.User;
+import com.asteroidAlert.asteroidservice.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

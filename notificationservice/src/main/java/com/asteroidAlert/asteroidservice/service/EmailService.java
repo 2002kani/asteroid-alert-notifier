@@ -1,4 +1,4 @@
-package com.asteroidsystem.notificationservice.service;
+package com.asteroidAlert.asteroidservice.service;
 
 public interface EmailService {
     void sendAsteroidAlertEmail();

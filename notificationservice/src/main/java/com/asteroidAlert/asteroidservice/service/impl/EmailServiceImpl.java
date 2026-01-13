@@ -1,10 +1,9 @@
-package com.asteroidsystem.notificationservice.service.impl;
+package com.asteroidAlert.asteroidservice.service.impl;
 
-import com.asteroidsystem.notificationservice.entity.Notification;
-import com.asteroidsystem.notificationservice.entity.User;
-import com.asteroidsystem.notificationservice.repository.NotificationRepository;
-import com.asteroidsystem.notificationservice.repository.UserRepository;
-import com.asteroidsystem.notificationservice.service.EmailService;
+import com.asteroidAlert.asteroidservice.entity.Notification;
+import com.asteroidAlert.asteroidservice.repository.NotificationRepository;
+import com.asteroidAlert.asteroidservice.repository.UserRepository;
+import com.asteroidAlert.asteroidservice.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
