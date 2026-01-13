@@ -40,6 +40,7 @@ public class EmailServiceImpl implements EmailService {
 
         if(text == null) {
             log.info("No asteroids to send alerts for at {}", LocalDateTime.now());
+            return;
         }
 
         final List<String> toEmails =  userRepository.findAllEmailsAndNotificationsEnabled();
