@@ -11,6 +11,7 @@ A small application that monitors potentially hazardous asteroids using NASA's N
 - Java (Spring Boot)
 - Apache Kafka
 - PostgreSQL
+- Hibernate
 - Docker
 - Mailtrap
 - NASA NeoWs API
