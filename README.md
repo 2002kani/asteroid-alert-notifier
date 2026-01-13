@@ -28,12 +28,12 @@ cd asteroidservice
 docker compose up -d
 ```
 
-3. Configure Environment Variables
+3.1 Configure Environment Variables
 For Asteroid Service:
 ```
 NASA_API_KEY=your_nasa_api_key // Or use the DEMO_KEY
 ```
-For Notification Service:
+3.2 For Notification Service:
 ```
 MAIL_USERNAME=your_mailtrap_username
 MAIL_PASSWORD=your_mailtrap_password
