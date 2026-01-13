@@ -14,3 +14,28 @@ A small application that monitors potentially hazardous asteroids using NASA's N
 - Docker
 - Mailtrap
 - NASA NeoWs API
+
+## How to use it
+
+1. Clone repository
+```
+git clone https://github.com/2002kani/booking-system-microservice.git
+cd inventory-service
+```
+
+2. Start Docker Container
+```
+docker compose up -d
+```
+
+3. Configure Environment Variables
+For Asteroid Service:
+```
+NASA_API_KEY=your_nasa_api_key // Or use the DEMO_KEY
+```
+For Notification Service:
+```
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+EMAIL_FROM=noreply@asteroid-alert.com
+```
