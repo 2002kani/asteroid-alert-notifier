@@ -75,11 +75,13 @@ public class EmailServiceImpl implements EmailService {
         sb.append("------------------------------");
 
         notifications.forEach(notification -> {
+            sb.append("\n");
             sb.append("Asteroid Name: ").append(notification.getAsteroidName()).append("\n");
             sb.append("Close Approach Date: ").append(notification.getCloseApproachDate()).append("\n");
             sb.append("Estimated Diameter in Meter").append(notification.getEstimatedDiameterAvgMeters()).append("\n");
             sb.append("Missed Distance in Kilometer").append(notification.getMissDistanceKilometers()).append("\n");
             sb.append("------------------------------");
+            sb.append("\n");
             notification.setEmailSent(true);
             notificationRepository.save(notification);
         });
