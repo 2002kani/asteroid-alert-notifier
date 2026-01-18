@@ -72,6 +72,8 @@ public class EmailServiceImpl implements EmailService {
 
         StringBuilder sb = new StringBuilder();
         sb.append("Asteroid Alert: ");
+        sb.append("\n");
+        sb.append("\n");
         sb.append("------------------------------");
 
         notifications.forEach(notification -> {
