@@ -40,3 +40,4 @@ MAIL_USERNAME=your_mailtrap_username
 MAIL_PASSWORD=your_mailtrap_password
 EMAIL_FROM=noreply@asteroid-alert.com
 ```
+ 
