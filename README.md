@@ -5,7 +5,7 @@ A small application that monitors potentially hazardous asteroids using NASA's N
 ## Microservice Architecture Overview
 
 ![Backend Architecture](./assets/backend-architecture.png)
-
+ 
 
 ## Tech Stack
 - Java (Spring Boot)
@@ -40,3 +40,4 @@ MAIL_USERNAME=your_mailtrap_username
 MAIL_PASSWORD=your_mailtrap_password
 EMAIL_FROM=noreply@asteroid-alert.com
 ```
+ 
