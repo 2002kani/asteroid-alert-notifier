@@ -40,7 +40,7 @@ public class AsteroidServiceImpl implements AsteroidService {
         log.info("Sending {} asteroid alerts to Kafka", asteroidEvent.size());
 
         asteroidEvent.forEach(event -> {
-            kafkaTemplate.send("asteroid-alert", event);
+            kafkaTemplate.send("asteroid-alert", event.getAsteroidName(), event);
             log.info("Asteroid alert sent to Kafka topic: {}", event);
         });
     }
