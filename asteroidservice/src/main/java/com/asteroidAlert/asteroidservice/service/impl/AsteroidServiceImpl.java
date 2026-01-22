@@ -39,6 +39,7 @@ public class AsteroidServiceImpl implements AsteroidService {
         List<AsteroidCollisionEvent> asteroidEvent = createAsteroidEvent(dangerousAsteroids);
         log.info("Sending {} asteroid alerts to Kafka", asteroidEvent.size());
 
+        // Not the ideal way, better to create a unique key instead of .getAsteroidName()
         asteroidEvent.forEach(event -> {
             kafkaTemplate.send("asteroid-alert", event.getAsteroidName(), event);
             log.info("Asteroid alert sent to Kafka topic: {}", event);
