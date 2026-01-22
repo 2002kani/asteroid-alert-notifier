@@ -2,7 +2,9 @@ package com.asteroidAlert.asteroidservice.service.impl;
 
 import com.asteroidAlert.asteroidservice.client.NasaClient;
 import com.asteroidAlert.asteroidservice.dto.Asteroid;
+import com.asteroidAlert.asteroidservice.entity.KafkaAsteroid;
 import com.asteroidAlert.asteroidservice.event.AsteroidCollisionEvent;
+import com.asteroidAlert.asteroidservice.repository.KafkaAsteroidRepository;
 import com.asteroidAlert.asteroidservice.service.AsteroidService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +21,7 @@ import java.util.List;
 public class AsteroidServiceImpl implements AsteroidService {
     private final NasaClient nasaClient;
     private KafkaTemplate<String, AsteroidCollisionEvent> kafkaTemplate;
+    private final KafkaAsteroidRepository kafkaAsteroidRepository;
 
     @Override
     public void alert() {
@@ -41,8 +45,16 @@ public class AsteroidServiceImpl implements AsteroidService {
 
         // Not the ideal way, better to create a unique key instead of .getAsteroidName()
         asteroidEvent.forEach(event -> {
-            kafkaTemplate.send("asteroid-alert", event.getAsteroidName(), event);
-            log.info("Asteroid alert sent to Kafka topic: {}", event);
+            boolean alreadySent = kafkaAsteroidRepository.existsByName(event.getAsteroidName());
+
+            if(!alreadySent) {
+                kafkaAsteroidRepository.save(KafkaAsteroid.builder().name(event.getAsteroidName()).build());
+
+                kafkaTemplate.send("asteroid-alert", event.getAsteroidName(), event);
+                log.info("Asteroid alert sent to Kafka topic: {}", event);
+            } else{
+                log.info("Asteroid alert already sent to Kafka topic: {}", event.getAsteroidName());
+            }
         });
     }
 
