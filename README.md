@@ -1,6 +1,6 @@
 # Asteroid Alerting System
 
-A small application that monitors potentially hazardous asteroids using NASA's NeoWs API and sends real-time email notifications to subscribed users. The system fetches asteroid data, identifies close approaches to Earth, and publishes collision events via Kafka to a notification service. Users with enabled notifications receive automated email alerts containing asteroid details such as name, approach date, estimated diameter, and miss distance. **Not production-ready. Built for personal interest and experimentation.**
+A small application that monitors potentially hazardous asteroids using NASA's NeoWs API and sends real-time email notifications to subscribed users. The system fetches asteroid data, identifies close approaches to Earth, and publishes collision events via Kafka to a notification service. Users with enabled notifications receive automated email alerts containing asteroid details such as name, approach date, estimated diameter, and miss distance. **Not production-ready yet. Built for personal interest and experimentation.**
 
 ## Microservice Architecture Overview
 
